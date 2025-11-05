@@ -63,7 +63,7 @@ Você pode baixar a imagem do Void Linux de duas formas:
 
 - 🌐 **Site oficial:** [voidlinux.org/download](https://voidlinux.org/download/)
 
-> ⚙️ Para este guia, utilize a **ISO base** do Void Linux — ela vem minimalista e é perfeita para aprender cada etapa da configuração.
+> ⚙️ Para este guia, utilize a **Live Image base** do Void Linux — ela vem minimalista e é perfeita para aprender cada etapa da configuração.
 
 ---
 

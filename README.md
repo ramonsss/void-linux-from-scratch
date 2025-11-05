@@ -61,7 +61,6 @@ Nesta seção, você aprenderá a preparar e instalar o **Void Linux** passo a p
 
 Você pode baixar a imagem do Void Linux de duas formas:
 
-- 📁 **Neste repositório:** disponível nos arquivos deste projeto *(recomendado para acompanhar o tutorial)*  
 - 🌐 **Site oficial:** [voidlinux.org/download](https://voidlinux.org/download/)
 
 > ⚙️ Para este guia, utilize a **ISO base** do Void Linux — ela vem minimalista e é perfeita para aprender cada etapa da configuração.

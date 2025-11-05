@@ -52,13 +52,80 @@ Este projeto também serve para mostrar o **potencial do i3wm** — um *tiling w
 ---
 
 ## 🧩 Instalação
-Esta seção cobre:
-- Download da ISO  
-- Criação do pendrive bootável  
-- Boot no instalador  
-- Particionamento e instalação do sistema  
 
-> ⚠️ Em breve — tutorial completo passo a passo com capturas de tela.
+Nesta seção, você aprenderá a preparar e instalar o **Void Linux** passo a passo — desde o download da ISO até o boot inicial do sistema.
+
+---
+
+### 🖥️ 1. Download da ISO
+
+Você pode baixar a imagem do Void Linux de duas formas:
+
+- 📁 **Neste repositório:** disponível nos arquivos deste projeto *(recomendado para acompanhar o tutorial)*  
+- 🌐 **Site oficial:** [voidlinux.org/download](https://voidlinux.org/download/)
+
+> ⚙️ Para este guia, utilize a **ISO base** do Void Linux — ela vem minimalista e é perfeita para aprender cada etapa da configuração.
+
+---
+
+### 💾 2. Criação do Pendrive Bootável
+
+Para criar o pendrive bootável, você pode usar qualquer ferramenta de sua preferência.  
+Pessoalmente, eu recomendo o **Ventoy**, pois ele permite adicionar várias ISOs no mesmo pendrive de forma simples.
+
+🔗 **Tutorial em vídeo (YouTube):**  
+[Como criar um pendrive bootável com Ventoy](https://youtu.be/11CkqZQ3scE?si=4x_zx6tQhr5wKBks)
+
+> 💡 Existem diversos tutoriais no YouTube sobre o processo — então não vou me estender muito nesta parte.
+
+---
+
+### 🚀 3. Bootando o Pendrive e Iniciando a Instalação do Void Linux
+
+✨ Próximo passo: iniciar o instalador do Void Linux a partir do pendrive bootável.
+
+🧠 Passos:
+
+Reinicie o computador e acesse a BIOS/UEFI.
+
+Geralmente, as teclas usadas são Del ou F2 (você pode tentar ambas).
+
+Altere a ordem de boot para que o pendrive seja o primeiro da lista.
+
+Salve e saia da BIOS.
+Seu sistema agora iniciará com a tela do Ventoy, como o exemplo abaixo:
+
+<p align="center"> <img src="https://ubunlog.com/wp-content/uploads/2024/04/ventoy-1-0-97-novedades-2024-imagen-contenido-blog-ubunlog.jpeg" alt="Ventoy USB Multiboot" width="700"> </p> <p align="center"><i>💡 Imagem ilustrativa — sua tela pode variar levemente.</i></p>
+
+Após o Ventoy carregar, selecione a ISO do Void Linux e, em seguida, escolha a opção mostrada na imagem abaixo:
+
+<p align="center"> <img src="https://www.ventoy.net/static/img/secondary_menu1.png" alt="Ventoy Secondary Boot Menu" width="700"> </p> <p align="center"><i>🧩 Menu secundário do Ventoy — selecione para iniciar a instalação.</i></p>
+
+---
+### 🚀 4. Início da Instalação do Void Linux
+
+Após passar pelos menus anteriores, você verá o seguinte menu:  
+Basta selecionar a **mesma opção** mostrada na imagem abaixo 👇
+
+<p align="center">
+  <img src="images/inital-install-void.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+---
+
+🧑‍💻 **Login do sistema live**
+
+Feito isso, ele irá pedir o login do **void-live**.  
+As credenciais são as seguintes:
+
+>Login: root
+--
+>Senha: voidlinux
+
+---
+
+✅ E pronto!  
+A imagem ISO já estará ativa e você poderá começar a instalação do seu Void Linux. 🐧
 
 ---
 

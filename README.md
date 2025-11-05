@@ -111,8 +111,9 @@ Basta selecionar a **mesma opção** mostrada na imagem abaixo 👇
 </p>
 
 ---
-
-🧑‍💻 **Login do sistema live**
+ㅤ
+ㅤ
+### 🧑‍💻 Login do sistema live**
 
 Feito isso, ele irá pedir o login do **void-live**.  
 As credenciais são as seguintes:
@@ -128,8 +129,8 @@ Senha: voidlinux
 A imagem ISO já estará ativa e você poderá começar a instalação do seu Void Linux. 🐧
 
 ---
-
-
+ㅤ
+ㅤ
 ### 🌐 Conexão com a internet
 
 É de suma importância ter conexão à internet.  
@@ -163,9 +164,12 @@ ele apresentara um retorno assim:
 64 bytes from 159.69.226.196: icmp_seq=3 ttl=51 time=23.1 ms
 
 feito isso, tudo certo : ) vamos para a proxima etapa
+ㅤ
+ㅤ
 
 ---
-
+ㅤ
+ㅤ
 ## 🪄 Pós-instalação
 Após instalar o Void, veremos como:
 - Configurar a rede (Wi-Fi, Ethernet)  
@@ -175,8 +179,12 @@ Após instalar o Void, veremos como:
 - Gerenciar pacotes com `xbps`  
 
 Essa etapa garante que o sistema esteja funcional e pronto para receber o ambiente gráfico i3wm.
+ㅤ
+ㅤ
 
 ---
+ㅤ
+ㅤ
 
 ## 🧰 Drivers e Hardware
 Tutoriais para configurar:
@@ -186,9 +194,12 @@ Tutoriais para configurar:
 - Touchpad e periféricos  
 
 Cada parte será explicada em detalhes, com foco na **compatibilidade e estabilidade** do sistema.
+ㅤ
+ㅤ
 
 ---
-
+ㅤ
+ㅤ
 ## 🎨 Ambientes gráficos
 Este guia será voltado especialmente para o **i3wm**, um *tiling window manager* conhecido por sua leveza e produtividade.  
 Vamos aprender a:
@@ -198,6 +209,9 @@ Vamos aprender a:
 - Melhorar a experiência visual e funcional do sistema  
 
 > 🧱 O objetivo é mostrar como o i3wm pode ser uma alternativa poderosa e minimalista aos ambientes gráficos tradicionais.
+>
+ㅤ
+ㅤ
 
 ---
 

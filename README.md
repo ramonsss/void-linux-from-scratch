@@ -117,14 +117,52 @@ Basta selecionar a **mesma opção** mostrada na imagem abaixo 👇
 Feito isso, ele irá pedir o login do **void-live**.  
 As credenciais são as seguintes:
 
->Login: root
---
->Senha: voidlinux
+```
+Login: root
+Senha: voidlinux
+```
 
 ---
 
 ✅ E pronto!  
 A imagem ISO já estará ativa e você poderá começar a instalação do seu Void Linux. 🐧
+
+---
+
+
+### 🌐 Conexão com a internet
+
+É de suma importância ter conexão à internet.  
+Se possível, utilize **rede cabeada**, pois é mais rápida e estável.  
+Caso não tenha, siga os passos abaixo para conectar via Wi-Fi:
+
+1️⃣ **Listar interfaces de rede e verificar redes disponíveis**
+```bash
+ip link
+sudo iw dev wlan0 scan | grep SSID
+```
+>substitua 'wlan0' pela sua interface
+
+```
+sudo wpa_supplicant -B -i wlan0 -c <(wpa_passphrase "NOME_DA_REDE" "SENHA_DA_REDE")
+sudo dhclient wlan0
+```
+>✅ A conexão ficará ativa até reiniciar ou finalizar a instalação.
+
+para testar a conexão com a rede, rode o seguinte comando:
+
+```
+ping voidlinux.org
+```
+
+ele apresentara um retorno assim:
+
+>PING voidlinux.org (159.69.226.196) 56(84) bytes of data.
+64 bytes from 159.69.226.196: icmp_seq=1 ttl=51 time=23.4 ms
+64 bytes from 159.69.226.196: icmp_seq=2 ttl=51 time=22.8 ms
+64 bytes from 159.69.226.196: icmp_seq=3 ttl=51 time=23.1 ms
+
+feito isso, tudo certo : ) vamos para a proxima etapa
 
 ---
 

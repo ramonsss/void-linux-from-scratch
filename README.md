@@ -39,6 +39,17 @@ O Void Linux é uma distribuição leve e independente, conhecida por seu:
 Se você quer aprender como o Linux realmente funciona por dentro, o Void Linux é uma excelente escolha.  
 Este projeto também serve para mostrar o **potencial do i3wm** — um *tiling window manager* minimalista, rápido e poderoso, que transforma a forma como você interage com seu sistema.
 
+### 🆚 Void Linux vs Arch Linux
+
+- O Void é **totalmente independente**, enquanto o Arch depende do ecossistema GNU e do systemd.  
+- O **RunIt** do Void é mais simples e leve que o **systemd** do Arch.  
+- O Void usa o **xbps**, seu próprio gerenciador de pacotes — rápido e limpo.  
+- Por ser mais enxuto, o Void costuma ter **boot e uso de memória mais leves**.  
+- O Arch tem mais suporte e comunidade maior, mas o Void oferece **mais controle e menos sobrecarga**.  
+
+💬 **Em resumo:** o **Arch é para aprender Linux**, o **Void é para entender o Linux.**
+
+
 ---
 
 ## ⚙️ Requisitos do sistema

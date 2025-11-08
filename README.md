@@ -151,7 +151,7 @@ iwctl
 >Dentro do iwctl, digita:
 
 ```
-device list
+[iwd]# device list
 ```
 
 Procura algo como wlan0 ou wlp2s0.
@@ -162,22 +162,22 @@ Esse é o nome da tua placa Wi-Fi
 >Ainda dentro do iwctl:
 
 ```
-station wlan0 scan
-station wlan0 get-networks
+[iwd]# station wlan0 scan
+[iwd]# station wlan0 get-networks
 ```
 >(substitui wlan0 pelo nome real do teu dispositivo)
 
 4️⃣ **🔑 Conectar à rede**
 
 ```
-station wlan0 connect NOME_DA_REDE
+[iwd]# station wlan0 connect NOME_DA_REDE
 ```
 Se tiver senha, ele vai pedir pra digitar.
 
 >Exemplo:
 
 ```
-station wlan0 connect MinhaRedeWiFi
+[iwd]# station wlan0 connect MinhaRedeWiFi
 ```
 
 
@@ -186,12 +186,12 @@ station wlan0 connect MinhaRedeWiFi
 Sai do iwctl com:
 
 ```
-exit
+[iwd]# exit
 ```
 Depois testa com:
 
 ```
-ping voidlinux.org
+# ping voidlinux.org
 ```
 
 ele apresentara um retorno assim:
@@ -210,6 +210,141 @@ feito isso, tudo certo : ) vamos para a proxima etapa
 ---
 ㅤ
 ㅤ
+## Instalação
+
+>Você pode utilizar o instalador automatizado do void, mas particularmente eu nao gosto muito, e recomendo você fazer a instalação via chroot que é como ajudarei a fazer neste tutorial
+
+>bom a primeira coisa que precisamos fazer, é particionar o nosso disco, eu particularmente gosto muito de utilizar o cfdisk, então nesse tutorial irei utilizar ele, para isso você precisará digitar:
+
+```
+# lsblk
+```
+
+>Você verá algo do tipo:
+
+<p align="center">
+  <img src="images/menu-lsblk.png" alt="Tela de instalação do Void Linux" width="700">
+  <i>Imagem apenas ilustrativa, você vera listar seu ssd ou hd</i>
+</p>
+
+>Agora você irá digitar:
+
+```
+# cfdisk /dev/sda
+```
+
+>Você deverá substituir esse sda pelo nome do seu disco, se fosse um ssd nvme, iria listar como: 'nvme1n1' algo do tipo...
+
+>Após isso voce vera um menu como esse:
+
+<p align="center">
+  <img src="images/menu-cfdisk.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Como estamos em um sistema UEFI usaremos o sistema gpt msm
+
+>feito isso você verá a seguinte tela:
+
+<p align="center">
+  <img src="images/menu-de-particao.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Dai você clica 'ENTER', e ele ira perguntar o tamanho da partição dai você poe exatamente:
+
+```
+# 1G
+```
+
+>Esse '1G' é para partição de boot onde logicamente irá ter 1GB, depois de digitar 1G aperte 'ENTER'
+
+>Novamente você irá até a sessão onde esta o espaço livre, e aperte 'ENTER', e ele ira perguntar o tamanho da partição dai você poe exatamente:
+
+```
+# 4G
+```
+
+>Esse '4G' é para uma partição SWAP, você não precisa fazer essa se nao quiser uma partição swap, mas particulamente sempre fiz, então vai da sua escolha.
+
+>Novamente você irá até a sessão onde esta o espaço livre, e aperte 'ENTER' DUAS VEZES para utilizar o total do espaço restante para sua partição root, voce deverá obter algo parecido com isso:
+
+<p align="center">
+  <img src="images/menu-particao2.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Dai você navege até onde esta escrito 'Write' aperte enter, e obrigatoriamente você deverá escrever 'yes' dessa mesma forma, dai aperte 'ENTER', e depois pode sair indo até 'quit' e apertando 'ENTER'
+
+>Após sair digite:
+
+```
+# lsblk
+```
+
+>Para confirmar tudo isso... você verá algo parecido com isso:
+
+<p align="center">
+  <img src="images/menu-lsblk2.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Vamos prosseguir para criar esses sistemas de arquivos, digite os seguintes comandos:
+
+```
+# mkfs.ext4 /dev/sda3
+```
+
+>Pronto agora temos nosso sistema de arquivos root configurado
+
+>OBS: sempre trocando o 'sda' pelo nome do seu dispositivo
+
+>E agora para nosso sistema de arquvios de inicialização, digite:
+
+```
+# mkfs.fat -F 32 /dev/sda1
+```
+
+>E para o nosso swap digite:
+
+```
+# mkswap /dev/sda2
+```
+>E pronto, vamos montar essas unidades agora
+
+>Para nosso sistema raiz, faça:
+
+```
+# mount /dev/sda3 /mnt
+```
+>Para nossa partição de inicialização, faça:
+
+```
+# mount --mkdir /dev/sda1 /mnt/boot/efi
+```
+
+>Para nosso swap, faça:
+
+```
+# swapon /dev/sda2
+```
+
+>Vamos confirmar tudo isso novamente com:
+
+```
+# lsblk
+```
+
+>Você verá algo parecido com isso:
+
+>Para confirmar tudo isso... você verá algo parecido com isso:
+
+<p align="center">
+  <img src="images/menu-lsblk3.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Com isso temos nossa partição raiz, temos nossa partição de inicialização, e temos nosso swap, agora estamos prontos para instalar o void linux de fato.
+
+---
+ㅤ
+ㅤ
+
 ## 🪄 Pós-instalação
 Após instalar o Void, veremos como:
 - Configurar a rede (Wi-Fi, Ethernet)  

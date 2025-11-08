@@ -696,7 +696,7 @@ agora pode reiniciar novamente o sistema e se tudo der certo ja vai iniciar com 
 >🔁 Reinicia o sistema imediatamente para aplicar todas as mudanças.
 Após a reinicialização, o LightDM será iniciado, permitindo que você entre com seu usuário através de uma interface gráfica.
 
-após reiniciado, faça o seu login... após aperto o i3wm, aperte as teclas **`SUPER`+`ENTER`**, para abrir o terminal e rode o seguinte comando:
+após reiniciado, faça o seu login... após aberto o i3wm, aperte as teclas **`SUPER`+`ENTER`**, para abrir o terminal e rode o seguinte comando:
 
 ```
 [ramon@voidlinux ~]$ ls -a
@@ -747,7 +747,113 @@ XkbVariant "abnt2" → Variante ABNT2, com “ç” e teclas acentuadas
 
 agora de um **`reboot`** pelo terminal para reiniciar as configurações
 
+### 🔊 Configurando o sistema de áudio e inicialização gráfica
+
 após reiniciado abra novamente o terminal com: **`SUPER`+`ENTER`**
+
+e digite:
+
+```
+[ramon@voidlinux ~]$ sudo xbps-install -Sy void-repo-nonfree
+```
+>🧩 Esse comando adiciona o repositório nonfree do Void Linux, que contém pacotes proprietários ou de código fechado — como firmwares de Wi-Fi, drivers NVIDIA e codecs de áudio/vídeo.
+
+>💡 Digite sua senha quando for solicitado.
+
+agora vamos instalar e configurar o sistema de audio
+
+```
+[ramon@voidlinux ~]$ sudo xbps-install -S alsa-utils pulseaudio alsa-plugins-pulseaudio apulse pavucontrol pamixer 
+```
+>🎧 Instala os pacotes essenciais para o sistema de áudio:
+> - alsa-utils: ferramentas para controle do som (como alsamixer)
+> - pulseaudio: servidor de som moderno, usado por grande parte dos 
+> - aplicativos
+> - alsa-plugins-pulseaudio: integra o ALSA com o PulseAudio
+> - apulse: camada alternativa para apps que exigem PulseAudio
+> - pavucontrol: interface gráfica para controlar volumes e dispositivos
+> - pamixer: ferramenta em linha de comando para ajustar volume
+
+>Após o comando, pressione “Y” para confirmar a instalação.
+
+```
+[ramon@voidlinux ~]$ sudo usermod -aG audio ramon
+```
+>👤 Adiciona o seu usuário ao grupo audio, permitindo controle total sobre os dispositivos de som do sistema.
+```
+[ramon@voidlinux ~]$ ip a
+```
+>🌐 Lista as interfaces de rede e endereços IP ativos, útil para verificar se sua conexão de internet está funcionando corretamente após o reboot.
+
+```
+[ramon@voidlinux ~]$ vim .config/i3/config
+```
+>🧩 Abre o arquivo principal de configuração do i3wm, onde definimos os programas que serão iniciados automaticamente junto com o ambiente gráfico.
+
+nesse campo do vim, você vai descer até o final e logo após o campo da bar digite isso:
+
+```
+# volume icon
+exec --no-startup-id volumeicon
+
+#nitrogen
+exec --no-startup-id nitrogen --restore
+```
+para salvar e sair aperte **`ESC`** e digite **`:wq`**
+
+```
+[ramon@voidlinux ~]$ xdg-user-dirs-update
+```
+>🗂️ Cria as pastas padrão de usuário (como Documentos, Downloads, Imagens, etc.), caso ainda não existam.
+
+agora de um **`reboot`** pelo terminal para reiniciar as configurações
+
+após reiniciado abra novamente o terminal com: **`SUPER`+`ENTER`**
+
+```
+[ramon@voidlinux ~]$ sudo xbps-install -S udiskie gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-smb
+```
+>udiskie
+É um gerenciador automático de dispositivos (como pendrives, HDs externos e cartões SD). Ele monta e desmonta volumes automaticamente quando você conecta ou remove um dispositivo.
+
+>gvfs
+É o GNOME Virtual File System, um sistema que permite acessar diferentes tipos de armazenamento (como dispositivos locais, servidores de rede, etc.) de forma unificada.
+
+>gvfs-afc
+Adiciona suporte para dispositivos iOS (iPhone/iPad) via cabo USB.
+
+>gvfs-gphoto2
+Adiciona suporte para câmeras digitais, permitindo acessar fotos diretamente do dispositivo.
+
+>gvfs-mtp
+Adiciona suporte para dispositivos Android via protocolo MTP (Media Transfer Protocol) — útil para transferir arquivos entre o PC e o celular.
+
+>gvfs-smb
+Adiciona suporte para compartilhamentos de rede SMB, usados em conexões com pastas do Windows e servidores Samba.
+
+>💡 Digite sua senha quando for solicitado.
+
+>Após o comando, pressione “Y” para confirmar a instalação.
+
+```
+[ramon@voidlinux ~]$ sudo usermod -aG storage ramon
+```
+
+>Esse comando dá permissão para o usuário acessar e montar dispositivos de armazenamento (como pendrives e HDs externos) sem precisar ser root toda vez.
+
+```
+[ramon@voidlinux ~]$ vim .config/i3/config
+```
+
+novamente desça até o fim e escreva:
+
+```
+# udiskie
+exec udiskie --automount --notify --tray
+```
+
+para salvar e sair aperte **`ESC`** e digite **`:wq`**
+
 ㅤ
 ㅤ
 ## 🧰 Drivers e Hardware

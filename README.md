@@ -214,6 +214,8 @@ feito isso, tudo certo : ) vamos para a proxima etapa
 
 >Você pode utilizar o instalador automatizado do void, mas particularmente eu nao gosto muito, e recomendo você fazer a instalação via chroot que é como ajudarei a fazer neste tutorial
 
+**💽 Montar Unidades**
+
 >bom a primeira coisa que precisamos fazer, é particionar o nosso disco, eu particularmente gosto muito de utilizar o cfdisk, então nesse tutorial irei utilizar ele, para isso você precisará digitar:
 
 ```
@@ -224,8 +226,10 @@ feito isso, tudo certo : ) vamos para a proxima etapa
 
 <p align="center">
   <img src="images/menu-lsblk.png" alt="Tela de instalação do Void Linux" width="700">
-  <i>Imagem apenas ilustrativa, você vera listar seu ssd ou hd</i>
+  <br>
+  <i>Imagem ilustrativa — você verá listado o seu SSD ou HD real.</i>
 </p>
+
 
 >Agora você irá digitar:
 
@@ -293,7 +297,7 @@ feito isso, tudo certo : ) vamos para a proxima etapa
 
 >Pronto agora temos nosso sistema de arquivos root configurado
 
->OBS: sempre trocando o 'sda' pelo nome do seu dispositivo
+>⚠️ OBS: sempre trocando o 'sda' pelo nome do seu dispositivo
 
 >E agora para nosso sistema de arquvios de inicialização, digite:
 
@@ -340,6 +344,260 @@ feito isso, tudo certo : ) vamos para a proxima etapa
 </p>
 
 >Com isso temos nossa partição raiz, temos nossa partição de inicialização, e temos nosso swap, agora estamos prontos para instalar o void linux de fato.
+
+**💻 Instalar o VoidLinux (literalmente)**
+
+>O wiki de instalação ele recomenda instalar o sistema linux base diretamente no mnt logo após montar essas unidades, então iremos fazer isso e gerar a guia fs depois, então digite:
+
+```
+# xbps-install -Sy -R https://repo-default.voidlinux.org/current -r /mnt base-system
+```
+>Clique em sim
+
+>Agora é hora de gerar a guia fs aqui, então digite:
+
+```
+# xgenfstab -U /mnt > /mnt/etc/fstab
+```
+
+>Logo após digite:
+
+```
+# xchroot /mnt /bin/bash
+```
+
+>⚙️ xbps é o gerenciador de pacotes do Void Linux, e você vai usá-lo bastante durante a instalação.
+>🔄 A sintaxe dele é um pouco diferente se você vem do Arch Linux (pacman), mas não se preocupe — ele possui todas as ferramentas que você precisa.
+📘 Recomendo dar uma olhada na documentação oficial para se familiarizar com os comandos:
+👉 https://docs.voidlinux.org/xbps/index.html
+
+>Vamos utilizar o xbps agora para instalar o vim, base-devel, grub pois eventualmente iremos precisar dele, e como estamos em uma maquina EFI então usaremos o efibootmgr:
+
+```
+[xchroot /mnt] # xbps-install base-devel vim grub efibootmgr
+```
+
+>Clique em sim
+
+>A wiki recomenda editar o arquivo de nome do host e o local:
+
+```
+[xchroot /mnt] # vim /etc/hostname
+```
+
+>você irá ver 'void-live' escrito no vim, mude para o nome que você deseja, geralmente eu deixo 'voidlinux' mas por total preferencia minha... para salvar sua alteração, pressione a tecla 'ESC' e digite ':wq' para salvar e sair
+
+>E para o nosso local precisaremos especificar isso então:
+
+```
+[xchroot /mnt] # vim /etc/default/libc-locales
+```
+
+>Este arquivo vai ser familiar se você ja instalou o ARCH
+
+<p align="center">
+  <img src="images/locales.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>digite '/' e procure pelo seu local, no meu caso 'pt-br.UTF-8', após achar o seu local, use a setas para até o começo da linha e delete o '#' da frente, e para salvar aperte 'ESC', e digite ':wq' para salvar e sair
+
+>Agora vamos configurar usuários
+
+```
+[xchroot /mnt] # xbps-reconfigure -f glibc-locales
+```
+
+```
+[xchroot /mnt] # passwd
+```
+>Ele vai pedir para você criar uma nova senha
+
+```
+[xchroot /mnt] # useradd -mG wheel ramon
+```
+>Substitua 'ramon' pelo nome de usuario que você deseja
+
+```
+[xchroot /mnt] # passwd ramon
+```
+
+>Ele vai pedir para você criar uma nova senha
+
+```
+[xchroot /mnt] # EDITOR=vim visudo
+```
+
+>nessa opção você pesquisa wheel com '/wheel'
+
+<p align="center">
+  <img src="images/wheel.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>você remove o # e o espaço onde esta o tracinho na foto, dai é so salvar novamente pressionando 'ESC' e digitando ':wq' para salvar e sair, e agora seu usuario deve ter pseudoprivilegios porque ele esta no grupo wheel
+
+>Como estamos em um siste UEFI devemos instalar o grub
+
+>digite:
+
+```
+[xchroot /mnt] # xbps-install -S grub-x86_64-efi
+[xchroot /mnt] # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Void"
+[xchroot /mnt] # grub-mkconfig -o /boot/grub/grub.cfg
+```
+>Pode ignorar o erro de desabilitação do OS, pois nao estamos utilizando inicialização dual
+
+>Antes de reiniciar vamos instalar algumas coisas, para facilitar um pouco a vida na fase de instalações dos graficos
+
+>Antes de mais nada, verifique se seu usuario tem pseudosprivilegios, digitando:
+
+```
+[xchroot /mnt] # su ramon
+```
+
+>⚠️ troque 'ramon' para o nome de usuario que você configurou anteriormente
+
+```
+[ramon@voidlinux] # ls
+```
+
+>esse comando vai fazer aparecer seus diretorios
+
+```
+[ramon@voidlinux] # sudo xbps-install -Su
+```
+
+>Ele vai pedir sua senha, e pronto 
+
+**💻✨ Instalação dos Gráficos Xorg**
+
+>O pacote xbps tem apenas 1 pacote xorg que cobre praticamente todos os casos
+
+```
+[ramon@voidlinux] # sudo xbps-install xorg xinit 
+```
+>Clique em sim
+
+**🎨✨ Instalar o Gerenciador de Janelas**
+>Como falei logo no começo antes de começarmos a instalação irei utilizar o 'I3WM' que é um gerenciador de janelas bem minimalista, porém você pode instalar outros gerenciadores, como gnome, kde, gwm, hyprland(so que o void nao da suporte oficial, posteriormente posso estar colocando neste tutorial como instalar com hyprland)
+
+>Vamos começar:
+
+```
+[ramon@voidlinux] # sudo xbps-install i3 i3status alacritty firefox fastfetch
+```
+
+>Estamos quase prontos para finalmente reiniciar e desfrutar de um inicio, porém queremos ter certeza que nossa internet funciona após a reinicialização.
+
+>O DHCPCD ele é uma solução minima para gerenciamento de rede, especialmente se voce esta utilizando uma conexão ethernet, entao eh ele que vamos utilizar hoje... então saia do seu usuário digitando:
+
+```
+[ramon@voidlinux] # exit
+``` 
+
+``` 
+[xchroot /mnt] # xbps-install dhcpcd
+``` 
+
+>Geralmente ja está instalado nessa altura do campeonato
+
+>Então tudo o que precisamos é configurar ele como um serviço para executa-lo 
+
+>Então se você esta acostumado ao usar o systemd sabe que para configurar um serviço você digita algo como:
+
+``` 
+[xchroot /mnt] # systemctl enable service_name
+```
+
+>E estaria tudo certo, mas como o void eh runit, ao invés de ter algum comando de alias para criar o link para você, nos mesmos criamos o link (obs: claro que você pode configurar um alias para isso, mas qual a graça? hehe), então digite:
+
+``` 
+[xchroot /mnt] # ln -s /etc/sv/dhcpcd /etc/runit/runsvdir/default/dhcpcd
+[xchroot /mnt] # ln -la /etc/runit/runsvdir/default
+```
+
+>Podemos ver que o tty está ativo e o dhcpcd já está vinculado. Configurar serviços com o runit é bem simples — e o melhor: você faz tudo manualmente, o que ajuda a criar bons hábitos e entender de fato como o sistema funciona.
+
+>Acho que estamos quase prontos para reiniciar, vamos para a etapa final...
+
+>precisamos garantir que todos os pacotes estejam instalados corretamente 
+
+``` 
+[xchroot /mnt] # xbps-reconfigure -fa 
+```
+>pronto finalmente estamos prontos para reiniciar
+
+``` 
+[xchroot /mnt] # exit 
+```
+
+``` 
+# umount -R /mnt
+# lsblk
+# shutdown -r now
+```
+
+>assim que der o shutdown espere a tela ficar toda preta por completo e retire seu pendrive que deu o boot, para inicializar no seu disco dessa vez
+
+> quando você reiniciar irá aparecer o menu grub assim:
+
+<p align="center">
+  <img src="images/menu-void.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Agora terá a tela de login via linha de comando pois não instalamos nenhuma interface de bloqueio, mas iremos instalar ainda ela, porém por agora vamos ficar sem mesmo, para fazer login:
+
+```
+Login: o nome de usuario que você configurou, no meu caso ramon
+Senha: a senha que você configurou para esse usuário
+```
+
+>após fazer login na sua conta, estamos prontos para inicializar nossa sessão x, execute:
+
+```
+[ramon@voidlinux] # echo ´exec i3´ >> .xinitrc
+[ramon@voidlinux] # startx
+```
+
+**💻✨ Configuração do i3**
+
+>Quando inicia o i3 sem o arquivo de configuração, ele solicita que voce gere um:
+
+<p align="center">
+  <img src="images/tela-i3.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Pressione 'ENTER'
+
+<p align="center">
+  <img src="images/tela-i3(2).png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Esse pergunta se queres usar a tela WIN ou ALT como telca super, eu gosto da tecla WIN então dou 'ENTER', mas se você preferir o ALT basta usar a seta para cima ou para baixa para escolher sua preferência e dar 'ENTER'
+
+<p align="center">
+  <img src="images/sistema-iniciado.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>E pronto sua configuração esta escrita, agora precisamos instalar o inicializador de aplicativos e usaremos o dmenu, porque ele é o padrão usado no i3, para instala-lo, pressione a tecla SUPER+ENTER, para abrir o terminal e digite: 
+
+```
+[ramon@voidlinux ~]$ sudo xbps-install dmenu
+```
+
+>Agora vamos testar ele, abra um novo espaço de trabalho apertando SUPER+2, aperte SUPER+D após apertar esse atalho ele deve abrir o menu
+
+<p align="center">
+  <img src="images/dmenu.png" alt="Tela de instalação do Void Linux" width="700">
+</p>
+
+>Agora você pode pesquisar todos seu aplicativos e abrir ele
+
+## ✅ E pronto, a instalação está completa!
+
+Todas as informações apresentadas aqui foram baseadas na wiki oficial do Void Linux, adaptadas e organizadas para deixar o processo mais intuitivo e direto.
+A partir deste ponto, você já tem o Void Linux instalado e funcional.
+
+Na próxima sessão — “Pós-instalação” — irei mostrar o que fazer depois da instalação: como configurar o áudio, aplicar personalizações, realizar adaptações e deixar o sistema pronto para uso no dia a dia.
 
 ---
 ㅤ

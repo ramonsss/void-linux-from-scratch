@@ -666,8 +666,90 @@ Caso nao se lembre do login e senha, volte ao começo deste tutorial que é o me
 
 ---
 ㅤ
-ㅤ
+### 📥 Instalação dos pacotes
 
+Para baixar todos os pacotes listados acima, execute:
+
+```bash
+[root@void ~]# xbps-install -S i3lock NetworkManager network-manager-applet xdg-user-dirs gvim nano nerd-fonts xterm geeqie volumeicon xfce4-clipman-plugin mc Thunar scrot ImageMagick unzip zip xorg-fonts dejavu-fonts-ttf lxappearance wget axel curl gnome-themes-standard pasystray mps-youtube youtube-dl mpv xarchiver cava mate-themes lightdm lightdm-gtk3-greeter nitrogen
+```
+
+Após instalar todos os pacotes, executamos alguns comandos essenciais para **habilitar os serviços do sistema** e **iniciar o ambiente gráfico** corretamente.
+
+```
+[root@void ~]# ln -sf /etc/sv/dbus /var/service
+```
+>🔧 Cria um link simbólico do serviço dbus para a pasta /var/service, que é onde o runit (sistema de inicialização do Void Linux) gerencia os serviços ativos.
+O dbus é fundamental para a comunicação entre processos e aplicações gráficas — sem ele, vários componentes do ambiente desktop não funcionariam.
+
+```
+[root@void ~]# ln -sf /etc/sv/lightdm /var/service
+```
+>💡 Faz o mesmo procedimento, mas para o LightDM, o gerenciador de login gráfico.
+Com esse link criado, o runit passará a iniciar o LightDM automaticamente toda vez que o sistema for ligado.
+
+agora pode reiniciar novamente o sistema e se tudo der certo ja vai iniciar com o lightdm, reinicie com:
+
+```
+[root@void ~]# shutdown -r now
+```
+>🔁 Reinicia o sistema imediatamente para aplicar todas as mudanças.
+Após a reinicialização, o LightDM será iniciado, permitindo que você entre com seu usuário através de uma interface gráfica.
+
+após reiniciado, faça o seu login... após aperto o i3wm, aperte as teclas **`SUPER`+`ENTER`**, para abrir o terminal e rode o seguinte comando:
+
+```
+[ramon@voidlinux ~]$ ls -a
+```
+>📂 O comando ls -a lista todos os arquivos e diretórios do seu diretório atual, incluindo os arquivos ocultos (que começam com .).
+É útil para verificar se as configurações do i3wm e outros arquivos de inicialização foram criados corretamente.
+
+
+agora digite:
+
+```
+[ramon@voidlinux ~]$ su
+```
+>Digite sua senha, isso serve para ir para o root do usuário
+
+agora vamos **ativar o NetworkManager** e ajustar o **layout do teclado** para o padrão brasileiro (ABNT2).
+
+```
+[root@voidlinux ramon]# ln -s /etc/sv/NetworkManager /var/service
+[root@voidlinux ramon]# mkdir -p /etc/X11/xorg.conf.d
+```
+>🌐 Cria um link simbólico do serviço NetworkManager em /var/service.
+Isso faz com que o runit (o sistema de inicialização do Void) inicie automaticamente o NetworkManager em cada boot, permitindo o gerenciamento fácil de conexões Wi-Fi e cabeadas.
+Sem esse passo, o Void não gerencia redes por padrão após a reinicialização.
+
+```
+[root@voidlinux ramon]# vim /etc/X11/xorg.conf.d/00-keyboard.conf
+```
+>🗂️ Cria o diretório onde ficam os arquivos de configuração do servidor gráfico Xorg.
+A flag -p garante que, caso os diretórios intermediários não existam, eles serão criados também.
+Vamos usar esse local para definir o layout do teclado do sistema gráfico.
+
+dentro do vim desse diretorio, digite: 
+
+```
+Section "InputClass"
+  Identifier "system-keyboard"
+  MatchIsKeyboard "on"
+  Option "XkbLayout" "br"
+  Option "XkbVariant" "abnt2"
+EndSection
+```
+para salvar e sair aperte **`ESC`** e digite **`:wq`**
+
+>🇧🇷 Essas opções definem:
+XkbLayout "br" → Layout do teclado brasileiro
+XkbVariant "abnt2" → Variante ABNT2, com “ç” e teclas acentuadas
+
+agora de um **`reboot`** pelo terminal para reiniciar as configurações
+
+após reiniciado abra novamente o terminal com: **`SUPER`+`ENTER`**
+ㅤ
+ㅤ
 ## 🧰 Drivers e Hardware
 Tutoriais para configurar:
 - Drivers de vídeo **NVIDIA / AMD / Intel**  

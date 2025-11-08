@@ -137,20 +137,58 @@ A imagem ISO já estará ativa e você poderá começar a instalação do seu Vo
 Se possível, utilize **rede cabeada**, pois é mais rápida e estável.  
 Caso não tenha, siga os passos abaixo para conectar via Wi-Fi:
 
-1️⃣ **Listar interfaces de rede e verificar redes disponíveis**
+1️⃣ **🧠 Entrar no modo interativo do iwctl**
 ```bash
-ip link
-sudo iw dev wlan0 scan | grep SSID
+iwctl
 ```
->substitua 'wlan0' pela sua interface
+>Vai aparecer algo tipo:
 
 ```
-sudo wpa_supplicant -B -i wlan0 -c <(wpa_passphrase "NOME_DA_REDE" "SENHA_DA_REDE")
-sudo dhclient wlan0
+[iwd]#
 ```
->✅ A conexão ficará ativa até reiniciar ou finalizar a instalação.
+2️⃣ **📶 Ver as interfaces disponíveis**
 
-para testar a conexão com a rede, rode o seguinte comando:
+>Dentro do iwctl, digita:
+
+```
+device list
+```
+
+Procura algo como wlan0 ou wlp2s0.
+Esse é o nome da tua placa Wi-Fi
+
+3️⃣ **🔍 Ver redes disponíveis**
+
+>Ainda dentro do iwctl:
+
+```
+station wlan0 scan
+station wlan0 get-networks
+```
+>(substitui wlan0 pelo nome real do teu dispositivo)
+
+4️⃣ **🔑 Conectar à rede**
+
+```
+station wlan0 connect NOME_DA_REDE
+```
+Se tiver senha, ele vai pedir pra digitar.
+
+>Exemplo:
+
+```
+station wlan0 connect MinhaRedeWiFi
+```
+
+
+5️⃣ **🌐 Testar a conexão**
+
+Sai do iwctl com:
+
+```
+exit
+```
+Depois testa com:
 
 ```
 ping voidlinux.org
@@ -158,10 +196,12 @@ ping voidlinux.org
 
 ele apresentara um retorno assim:
 
+```
 >PING voidlinux.org (159.69.226.196) 56(84) bytes of data.
-64 bytes from 159.69.226.196: icmp_seq=1 ttl=51 time=23.4 ms
-64 bytes from 159.69.226.196: icmp_seq=2 ttl=51 time=22.8 ms
-64 bytes from 159.69.226.196: icmp_seq=3 ttl=51 time=23.1 ms
+>64 bytes from 159.69.226.196: icmp_seq=1 ttl=51 time=23.4 ms
+>64 bytes from 159.69.226.196: icmp_seq=2 ttl=51 time=22.8 ms
+>64 bytes from 159.69.226.196: icmp_seq=3 ttl=51 time=23.1 ms
+```
 
 feito isso, tudo certo : ) vamos para a proxima etapa
 ㅤ

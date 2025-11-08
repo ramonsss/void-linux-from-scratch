@@ -615,15 +615,53 @@ Na próxima sessão — “Pós-instalação” — irei mostrar o que fazer dep
 ㅤ
 
 ## 🪄 Pós-instalação
-Após instalar o Void, veremos como:
-- Configurar a rede (Wi-Fi, Ethernet)  
-- Criar usuários  
-- Ativar serviços do RunIt  
-- Instalar ferramentas básicas de terminal  
-- Gerenciar pacotes com `xbps`  
+Essa etapa garante que o sistema esteja funcional e pronto para o uso do dia a dia.
 
-Essa etapa garante que o sistema esteja funcional e pronto para receber o ambiente gráfico i3wm.
-ㅤ
+Durante a instalação (com `chroot`), já havíamos instalado:
+- `i3`
+- `i3status`
+- `dmenu`
+
+Agora, vamos adicionar outras ferramentas importantes para o ambiente gráfico e o uso diário.
+
+---
+
+### 📦 Pacotes que serão instalados
+
+- `i3lock`  
+- `NetworkManager`, `network-manager-applet`  
+- `xdg-user-dirs`  
+- `gvim`, `nano`  
+- `nerd-fonts`  
+- `xterm`  
+- `geeqie`  
+- `volumeicon`  
+- `xfce4-clipman-plugin`  
+- `mc`  
+- `Thunar`  
+- `scrot`  
+- `ImageMagick`  
+- `unzip`, `zip`  
+- `xorg-fonts`, `dejavu-fonts-ttf`  
+- `lxappearance`  
+- `wget`, `axel`  
+- `curl`  
+- `gnome-themes-standard` *(pode aparecer como `gnome-themes-extra` em algumas versões)*  
+- `pasystray`  
+- `mps-youtube`, `youtube-dl`, `mpv` *(podendo ser substituídos por `yt-dlp` caso necessário)*  
+- `xarchiver`  
+- `cava`  
+- `mate-themes`  
+- `lightdm`, `lightdm-gtk3-greeter`  
+- `nitrogen`
+
+---
+
+### ⚙️ Observação
+
+Mesmo com seu usuário já configurado, **reinicie o sistema** e, no login, entre novamente como **root** (sem o pendrive live).  
+O sistema já rodará diretamente pelo SSD, permitindo configurar e instalar tudo de forma definitiva.
+Caso nao se lembre do login e senha, volte ao começo deste tutorial que é o mesmo.
 ㅤ
 
 ---

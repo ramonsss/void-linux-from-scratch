@@ -654,6 +654,7 @@ Agora, vamos adicionar outras ferramentas importantes para o ambiente gráfico e
 - `mate-themes`  
 - `lightdm`, `lightdm-gtk3-greeter`  
 - `nitrogen`
+- `entre outros`
 
 ---
 

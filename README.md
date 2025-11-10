@@ -523,7 +523,7 @@ feito isso, tudo certo : ) vamos para a proxima etapa
 
 ``` 
 [xchroot /mnt] # ln -s /etc/sv/dhcpcd /etc/runit/runsvdir/default/dhcpcd
-[xchroot /mnt] # ln -la /etc/runit/runsvdir/default
+[xchroot /mnt] # ls -la /etc/runit/runsvdir/default
 ```
 
 >Podemos ver que o tty está ativo e o dhcpcd já está vinculado. Configurar serviços com o runit é bem simples — e o melhor: você faz tudo manualmente, o que ajuda a criar bons hábitos e entender de fato como o sistema funciona.
